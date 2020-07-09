@@ -11,12 +11,12 @@ Functions to create panoramic image from fisheye
 """
 PI = 3.141592653589793
 #function to find fisheye coordiante
-def findFisheye(R, Cfx, Cfy, He, We):
+def findFisheye(R, Cfx, Cfy, He, We,r):
 
     map_x = np.zeros((He, We), np.float32)
     map_y = np.zeros((He, We), np.float32)
     for Xe in range(0, We-1):
-        for Ye in range(1, He - 71):
+        for Ye in range(1, int(He) - 71):
             r = (He-Ye) / He * R
             theta = (We-Xe) / We * 2.0 * PI
             Xf = Cfx + r * math.sin(theta)

@@ -1,5 +1,8 @@
 import cv2
 import numpy as np
+import sys
+sys.path.append("/home/givral/Documents/OCproject")
+
 from OCProject import fish2pano as f2p
 from OCProject import BGS
 from OCProject import puttext
@@ -7,8 +10,7 @@ import pandas
 from openpyxl import load_workbook
 from math import atan
 from OCProject import export_data
-
-
+print(5)
 #global variables
 PI = 3.141592653589793
 #height la chieu cao , width la chieu ngang
@@ -28,21 +30,21 @@ We = int(2*PI*R)
 # radius r of inner circle
 r = 70
 #starting frame number
+
 frame_no = 0
 font = cv2.FONT_HERSHEY_SIMPLEX
 
 #load workbook
-book = load_workbook('/home/givral/PycharmProjects/OCproject/result/top_0_r70_BGS_first.xlsx')
+book = load_workbook('/home/givral/Documents/OCProject/data/result/top_0_r70_unwrap_first.xlsx')
 export_data.write_header(book)
 # Create a map of panoramic coordinate
-xmap, ymap = f2p.findFisheye(R,Cfx,Cfy,He,We)
+xmap, ymap = f2p.findFisheye(R,Cfx,Cfy,He,We,r)
 # Capture video
-cap = cv2.VideoCapture('/home/givral/PycharmProjects/OCproject/datasets/BOMNI/scenario1/top-0.mp4')
+cap = cv2.VideoCapture('/home/givral/Documents/OCproject/data/bomni-5840/scenario1/top-0.mp4')
 
 while cap.isOpened():
     # read the frame
     _, fisheyeImage = cap.read()
-
     # crop the center of the fish eye image with radius r
     cropped = f2p.cropcircle(fisheyeImage,int(Wf/2),int(Hf/2),r)
     # apply BGS on cropped image
